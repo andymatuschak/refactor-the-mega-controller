@@ -14,6 +14,8 @@
 		614991C81B9E3D9A005278F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 614991C71B9E3D9A005278F8 /* Assets.xcassets */; };
 		614991CB1B9E3D9A005278F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 614991C91B9E3D9A005278F8 /* LaunchScreen.storyboard */; };
 		61772D8E1B9FA51900FBF11D /* UINavigationBar+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */; };
+		61772D901B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61772D8F1B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift */; };
+		61772D941B9FA9A900FBF11D /* RelativeTimeDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61772D931B9FA9A900FBF11D /* RelativeTimeDateFormatterTests.swift */; };
 		619018901B9E962000A0EF74 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190188F1B9E962000A0EF74 /* NavigationController.swift */; };
 		61B7AB3A1B9EA02E004CE41C /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7AB391B9EA02E004CE41C /* AddViewController.swift */; };
 		61B7AB3E1B9F9F37004CE41C /* NavigationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */; };
@@ -42,6 +44,8 @@
 		614991D11B9E3D9A005278F8 /* MegaControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegaControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		614991D71B9E3D9A005278F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Theme.swift"; sourceTree = "<group>"; };
+		61772D8F1B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelativeTimeDateFormatter.swift; sourceTree = "<group>"; };
+		61772D931B9FA9A900FBF11D /* RelativeTimeDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelativeTimeDateFormatterTests.swift; sourceTree = "<group>"; };
 		6190188F1B9E962000A0EF74 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		61B7AB391B9EA02E004CE41C /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTheme.swift; sourceTree = "<group>"; };
@@ -93,6 +97,7 @@
 				61B7AB391B9EA02E004CE41C /* AddViewController.swift */,
 				61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */,
 				61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */,
+				61772D8F1B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift */,
 				614991C11B9E3D9A005278F8 /* Main.storyboard */,
 				614991C71B9E3D9A005278F8 /* Assets.xcassets */,
 				614991C91B9E3D9A005278F8 /* LaunchScreen.storyboard */,
@@ -107,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				61B7AB401B9FA11B004CE41C /* NavigationThemeTests.swift */,
+				61772D931B9FA9A900FBF11D /* RelativeTimeDateFormatterTests.swift */,
 				614991D71B9E3D9A005278F8 /* Info.plist */,
 				61B7AB3F1B9FA11B004CE41C /* MegaControllerTests-Bridging-Header.h */,
 			);
@@ -217,6 +223,7 @@
 				61B7AB3A1B9EA02E004CE41C /* AddViewController.swift in Sources */,
 				614991C61B9E3D9A005278F8 /* MegaController.xcdatamodeld in Sources */,
 				619018901B9E962000A0EF74 /* NavigationController.swift in Sources */,
+				61772D901B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift in Sources */,
 				61B7AB3E1B9F9F37004CE41C /* NavigationTheme.swift in Sources */,
 				614991C01B9E3D9A005278F8 /* ViewController.swift in Sources */,
 				614991BE1B9E3D9A005278F8 /* AppDelegate.swift in Sources */,
@@ -229,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61B7AB411B9FA11B004CE41C /* NavigationThemeTests.swift in Sources */,
+				61772D941B9FA9A900FBF11D /* RelativeTimeDateFormatterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

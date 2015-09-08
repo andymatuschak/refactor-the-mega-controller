@@ -114,31 +114,8 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
         cell.textLabel!.text = task.valueForKey("title") as! String?
         
         let taskDate = task.valueForKey("dueDate") as! NSDate
-        let now = NSDate()
-        let calendar = NSCalendar.currentCalendar()
+        cell.detailTextLabel!.text = RelativeTimeDateFormatter().stringForDate(taskDate, relativeToDate: NSDate()).lowercaseString
         
-        var beginningOfTaskDate: NSDate? = nil
-        var beginningOfToday: NSDate? = nil
-        
-        calendar.rangeOfUnit(.Day, startDate: &beginningOfTaskDate, interval: nil, forDate: taskDate)
-        calendar.rangeOfUnit(.Day, startDate: &beginningOfToday, interval: nil, forDate: now)
-        let numberOfCalendarDaysUntilTaskDueDate = calendar.components(NSCalendarUnit.Day, fromDate: beginningOfToday!, toDate: beginningOfTaskDate!, options: NSCalendarOptions()).day
-        
-        let description: String
-        switch numberOfCalendarDaysUntilTaskDueDate {
-        case -Int.max ... -2:
-            description = "\(abs(numberOfCalendarDaysUntilTaskDueDate)) days ago"
-        case -1:
-            description = "Yesterday"
-        case 0:
-            description = "Today"
-        case 1:
-            description = "Tomorrow"
-        default:
-            description = "In \(numberOfCalendarDaysUntilTaskDueDate) days"
-        }
-
-        cell.detailTextLabel!.text = description.lowercaseString
         return cell
     }
     

@@ -19,6 +19,6 @@ class NavigationThemeTests: XCTestCase {
     }
     
     func testThemeForManyTasks() {
-        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 20), NavigationTheme.Normal)
+        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 20), NavigationTheme.Doomed)
     }
 }
