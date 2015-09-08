@@ -12,6 +12,10 @@ import UIKit
 class ViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
 
     private var fetchedResultsController: NSFetchedResultsController?
+    var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)?
+    var navigationTheme: NavigationTheme {
+        return NavigationTheme(numberOfImminentTasks: fetchedResultsController?.fetchedObjects?.count ?? 0)
+    }
     
     lazy var applicationDocumentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
@@ -59,7 +63,6 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
         }
         
         updateNavigationBar()
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     private func sectionIndexForTask(task: NSManagedObject) -> Int {
@@ -147,7 +150,6 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
         tableView.endUpdates()
         
         updateNavigationBar()
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
@@ -173,31 +175,9 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
     }
     
     func updateNavigationBar() {
-        switch fetchedResultsController!.fetchedObjects!.count {
-        case 0...3:
-            navigationController!.navigationBar.barTintColor = nil
-            navigationController!.navigationBar.titleTextAttributes = nil
-            navigationController!.navigationBar.tintColor = nil
-        case 4...9:
-            navigationController!.navigationBar.barTintColor = UIColor(red: 235/255, green: 156/255, blue: 77/255, alpha: 1.0)
-            navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-            navigationController!.navigationBar.tintColor = UIColor.whiteColor()
-        default:
-            navigationController!.navigationBar.barTintColor = UIColor(red: 248/255, green: 73/255, blue: 68/255, alpha: 1.0)
-            navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-            navigationController!.navigationBar.tintColor = UIColor.whiteColor()
-        }
+        navigationThemeDidChangeHandler?(navigationTheme)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        switch fetchedResultsController?.fetchedObjects!.count {
-        case .Some(0...3), .None:
-            return .Default
-        case .Some(_):
-            return .LightContent
-        }
-    }
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.destinationViewController is AddViewController {
             segue.destinationViewController.modalPresentationStyle = .OverFullScreen

@@ -12,5 +12,23 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    
+    var navigationController: NavigationController {
+        return window!.rootViewController as! NavigationController
+    }
+    
+    lazy var primaryViewController: ViewController = {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Primary") as! ViewController
+    }()
+    
+    func applicationDidFinishLaunching(application: UIApplication) {
+        primaryViewController.navigationThemeDidChangeHandler = { [weak self] theme in
+            if let navigationController = self?.navigationController {
+                navigationController.navigationBar.applyTheme(theme)
+                navigationController.statusBarStyle = theme.statusBarStyle
+            }
+        }
+        navigationController.viewControllers = [primaryViewController]
+    }
 }
 

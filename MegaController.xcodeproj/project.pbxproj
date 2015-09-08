@@ -13,9 +13,11 @@
 		614991C61B9E3D9A005278F8 /* MegaController.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 614991C41B9E3D9A005278F8 /* MegaController.xcdatamodeld */; };
 		614991C81B9E3D9A005278F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 614991C71B9E3D9A005278F8 /* Assets.xcassets */; };
 		614991CB1B9E3D9A005278F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 614991C91B9E3D9A005278F8 /* LaunchScreen.storyboard */; };
-		614991D61B9E3D9A005278F8 /* MegaControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614991D51B9E3D9A005278F8 /* MegaControllerTests.swift */; };
+		61772D8E1B9FA51900FBF11D /* UINavigationBar+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */; };
 		619018901B9E962000A0EF74 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190188F1B9E962000A0EF74 /* NavigationController.swift */; };
 		61B7AB3A1B9EA02E004CE41C /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7AB391B9EA02E004CE41C /* AddViewController.swift */; };
+		61B7AB3E1B9F9F37004CE41C /* NavigationTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */; };
+		61B7AB411B9FA11B004CE41C /* NavigationThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B7AB401B9FA11B004CE41C /* NavigationThemeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,10 +40,13 @@
 		614991CA1B9E3D9A005278F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		614991CC1B9E3D9A005278F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		614991D11B9E3D9A005278F8 /* MegaControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegaControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		614991D51B9E3D9A005278F8 /* MegaControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaControllerTests.swift; sourceTree = "<group>"; };
 		614991D71B9E3D9A005278F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Theme.swift"; sourceTree = "<group>"; };
 		6190188F1B9E962000A0EF74 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		61B7AB391B9EA02E004CE41C /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTheme.swift; sourceTree = "<group>"; };
+		61B7AB3F1B9FA11B004CE41C /* MegaControllerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MegaControllerTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		61B7AB401B9FA11B004CE41C /* NavigationThemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationThemeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +91,8 @@
 				6190188F1B9E962000A0EF74 /* NavigationController.swift */,
 				614991BF1B9E3D9A005278F8 /* ViewController.swift */,
 				61B7AB391B9EA02E004CE41C /* AddViewController.swift */,
+				61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */,
+				61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */,
 				614991C11B9E3D9A005278F8 /* Main.storyboard */,
 				614991C71B9E3D9A005278F8 /* Assets.xcassets */,
 				614991C91B9E3D9A005278F8 /* LaunchScreen.storyboard */,
@@ -99,8 +106,9 @@
 		614991D41B9E3D9A005278F8 /* MegaControllerTests */ = {
 			isa = PBXGroup;
 			children = (
-				614991D51B9E3D9A005278F8 /* MegaControllerTests.swift */,
+				61B7AB401B9FA11B004CE41C /* NavigationThemeTests.swift */,
 				614991D71B9E3D9A005278F8 /* Info.plist */,
+				61B7AB3F1B9FA11B004CE41C /* MegaControllerTests-Bridging-Header.h */,
 			);
 			path = MegaControllerTests;
 			sourceTree = SOURCE_ROOT;
@@ -149,6 +157,7 @@
 		614991B21B9E3D9A005278F8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Andy Matuschak";
 				TargetAttributes = {
@@ -208,8 +217,10 @@
 				61B7AB3A1B9EA02E004CE41C /* AddViewController.swift in Sources */,
 				614991C61B9E3D9A005278F8 /* MegaController.xcdatamodeld in Sources */,
 				619018901B9E962000A0EF74 /* NavigationController.swift in Sources */,
+				61B7AB3E1B9F9F37004CE41C /* NavigationTheme.swift in Sources */,
 				614991C01B9E3D9A005278F8 /* ViewController.swift in Sources */,
 				614991BE1B9E3D9A005278F8 /* AppDelegate.swift in Sources */,
+				61772D8E1B9FA51900FBF11D /* UINavigationBar+Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				614991D61B9E3D9A005278F8 /* MegaControllerTests.swift in Sources */,
+				61B7AB411B9FA11B004CE41C /* NavigationThemeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,10 +371,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MegaControllerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.andymatuschak.MegaControllerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MegaControllerTests/MegaControllerTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MegaController.app/MegaController";
 			};
 			name = Debug;
@@ -372,10 +386,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MegaControllerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.andymatuschak.MegaControllerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MegaControllerTests/MegaControllerTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MegaController.app/MegaController";
 			};
 			name = Release;

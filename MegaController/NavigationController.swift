@@ -9,7 +9,11 @@
 import UIKit
 
 class NavigationController: UINavigationController {
-    override func childViewControllerForStatusBarStyle() -> UIViewController? {
-        return topViewController
+    var statusBarStyle: UIStatusBarStyle = .Default {
+        didSet { setNeedsStatusBarAppearanceUpdate() }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return statusBarStyle
     }
 }
