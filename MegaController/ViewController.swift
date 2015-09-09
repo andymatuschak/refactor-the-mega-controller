@@ -9,46 +9,20 @@
 import CoreData
 import UIKit
 
-class ViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
+class ViewController: UITableViewController, UpcomingTaskDataManagerDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
 
     var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)?
     var navigationTheme: NavigationTheme {
-        return NavigationTheme(numberOfImminentTasks: fetchedResultsController?.fetchedObjects?.count ?? 0)
+        return NavigationTheme(numberOfImminentTasks: upcomingTaskDataManager.totalNumberOfTasks)
     }
     
-    private let coreDataStore = CoreDataStore()
-    private var fetchedResultsController: NSFetchedResultsController?
-        
-    private var taskSections: [[NSManagedObject]] = [[], [], []]
+    private let upcomingTaskDataManager = UpcomingTaskDataManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let fetchRequest = NSFetchRequest(entityName: "Task")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dueDate", ascending: true)]
-        fetchRequest.predicate = NSPredicate(forTasksWithinNumberOfDays: 10, ofDate: NSDate())
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStore.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController!.delegate = self
-        try! fetchedResultsController!.performFetch()
-        
-        for task in fetchedResultsController!.fetchedObjects! as! [NSManagedObject] {
-            taskSections[sectionIndexForTask(task)].append(task)
-        }
+        upcomingTaskDataManager.delegate = self
         
         updateNavigationBar()
-    }
-    
-    private func sectionIndexForTask(task: NSManagedObject) -> Int {
-        let date = task.valueForKey("dueDate") as! NSDate
-        let numberOfDaysUntilTaskDueDate = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: NSDate(), toDate: date, options: NSCalendarOptions()).day
-        switch numberOfDaysUntilTaskDueDate {
-        case -Int.max ... 2:
-            return 0
-        case 3...5:
-            return 1
-        default:
-            return 2
-        }
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -56,32 +30,23 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        coreDataStore.managedObjectContext.deleteObject(taskSections[indexPath.section][indexPath.row])
+        upcomingTaskDataManager.deleteTask(upcomingTaskDataManager.taskSections[indexPath.section][indexPath.row])
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return taskSections.count
+        return upcomingTaskDataManager.taskSections.count
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Now"
-        case 1:
-            return "Soon"
-        case 2:
-            return "Upcoming"
-        default:
-            fatalError("Unexpected section")
-        }
+        return UpcomingTaskSection(rawValue: section)!.title
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskSections[section].count
+        return upcomingTaskDataManager.taskSections[section].count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let task = taskSections[indexPath.section][indexPath.row]
+        let task = upcomingTaskDataManager.taskSections[indexPath.section][indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         cell.textLabel!.text = task.valueForKey("title") as! String?
@@ -92,36 +57,22 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
         return cell
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func dataManagerWillChangeContent(dataManager: UpcomingTaskDataManager) {
         tableView.beginUpdates()
     }
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+
+    func dataManagerDidChangeContent(dataManager: UpcomingTaskDataManager) {
         tableView.endUpdates()
         
         updateNavigationBar()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-		let task = anObject as! NSManagedObject
-        switch type {
-        case .Insert:
-            let insertedTaskDate = anObject.valueForKey("dueDate") as! NSDate
-            let sectionIndex = sectionIndexForTask(task)
-            let insertionIndex = taskSections[sectionIndex].indexOf { task in
-                let otherTaskDate = task.valueForKey("dueDate") as! NSDate
-                return insertedTaskDate.compare(otherTaskDate) == .OrderedAscending
-            } ?? taskSections[sectionIndex].count
-            taskSections[sectionIndex].insert(task, atIndex: insertionIndex)
-            tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: insertionIndex, inSection: sectionIndex)], withRowAnimation: .Automatic)
-        case .Delete:
-            let sectionIndex = sectionIndexForTask(task)
-            let deletedTaskIndex = taskSections[sectionIndex].indexOf(task)!
-            taskSections[sectionIndex].removeAtIndex(deletedTaskIndex)
-            tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: deletedTaskIndex, inSection: sectionIndex)], withRowAnimation: .Automatic)
-        case .Move, .Update:
-            fatalError("Unsupported")
-        }
+    func dataManager(dataManager: UpcomingTaskDataManager, didInsertRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+
+    func dataManager(dataManager: UpcomingTaskDataManager, didDeleteRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
     func updateNavigationBar() {
@@ -169,10 +120,6 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
     
     @IBAction func unwindFromAddController(sender: UIStoryboardSegue) {
         let addViewController = (sender.sourceViewController as! AddViewController)
-        
-        let newTask = NSManagedObject(entity: coreDataStore.managedObjectContext.persistentStoreCoordinator!.managedObjectModel.entitiesByName["Task"]!, insertIntoManagedObjectContext: coreDataStore.managedObjectContext)
-        newTask.setValue(addViewController.textField.text, forKey: "title")
-        newTask.setValue(addViewController.datePicker.date, forKey: "dueDate")
-        try! coreDataStore.managedObjectContext.save()
+        upcomingTaskDataManager.createTaskWithTitle(addViewController.textField.text!, dueDate: addViewController.datePicker.date)
     }
 }
