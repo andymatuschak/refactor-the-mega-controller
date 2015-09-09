@@ -32,4 +32,8 @@ enum UpcomingTaskSection: Int {
         case .Upcoming: return "Upcoming"
         }
     }
+    
+    static var numberOfSections: Int {
+        return 3
+    }
 }

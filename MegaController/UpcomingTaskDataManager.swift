@@ -9,7 +9,10 @@
 import CoreData
 
 class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
-    var taskSections: [[NSManagedObject]] = [[], [], []]
+    var taskSections: [[NSManagedObject]] {
+        return resultsCache.sections
+    }
+    
     var totalNumberOfTasks: Int {
         return taskSections.map { $0.count }.reduce(0, combine: +)
     }
@@ -18,6 +21,7 @@ class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
     
     private let coreDataStore = CoreDataStore()
     private var fetchedResultsController: NSFetchedResultsController
+    private var resultsCache: UpcomingTaskResultsCache
     
     
     override init() {
@@ -26,14 +30,12 @@ class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
         fetchRequest.predicate = NSPredicate(forTasksWithinNumberOfDays: 10, ofDate: NSDate())
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStore.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
+        try! fetchedResultsController.performFetch()
+		resultsCache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: fetchedResultsController.fetchedObjects! as! [NSManagedObject], baseDate: NSDate())
+
         super.init()
         
         fetchedResultsController.delegate = self
-        try! fetchedResultsController.performFetch()
-        
-        for task in fetchedResultsController.fetchedObjects! as! [NSManagedObject] {
-            taskSections[sectionIndexForTask(task)].append(task)
-        }
     }
     
     func deleteTask(task: NSManagedObject) {
@@ -56,35 +58,20 @@ class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
         delegate?.dataManagerDidChangeContent(self)
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+	func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
 		let task = anObject as! NSManagedObject
         switch type {
         case .Insert:
-            let insertedTaskDate = anObject.valueForKey("dueDate") as! NSDate
-            let sectionIndex = sectionIndexForTask(task)
-            let insertionIndex = taskSections[sectionIndex].indexOf { task in
-                let otherTaskDate = task.valueForKey("dueDate") as! NSDate
-                return insertedTaskDate.compare(otherTaskDate) == .OrderedAscending
-			} ?? taskSections[sectionIndex].count
-            taskSections[sectionIndex].insert(task, atIndex: insertionIndex)
-            
-            delegate?.dataManager(self, didInsertRowAtIndexPath: NSIndexPath(forRow: insertionIndex, inSection: sectionIndex))
+            let insertedIndexPath = resultsCache.insertTask(task)
+            delegate?.dataManager(self, didInsertRowAtIndexPath: insertedIndexPath)
         case .Delete:
-            let sectionIndex = sectionIndexForTask(task)
-            let deletedTaskIndex = taskSections[sectionIndex].indexOf(task)!
-            taskSections[sectionIndex].removeAtIndex(deletedTaskIndex)
-            
-            delegate?.dataManager(self, didDeleteRowAtIndexPath: NSIndexPath(forRow: deletedTaskIndex, inSection: sectionIndex))
+            let deletedIndexPath = resultsCache.deleteTask(task)
+            delegate?.dataManager(self, didDeleteRowAtIndexPath: deletedIndexPath)
         case .Move, .Update:
             fatalError("Unsupported")
         }
     }
     
-    // TODO: Extract me.
-    private func sectionIndexForTask(task: NSManagedObject) -> Int {
-        let dueDate = task.valueForKey("dueDate") as! NSDate
-		return UpcomingTaskSection(forTaskDueDate: dueDate, baseDate: NSDate()).rawValue
-    }
 }
 
 protocol UpcomingTaskDataManagerDelegate {
