@@ -6,7 +6,6 @@
 //  Copyright © 2015 Andy Matuschak. All rights reserved.
 //
 
-import CoreData
 import UIKit
 
 class ViewController: UITableViewController, UpcomingTaskDataManagerDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
@@ -49,10 +48,8 @@ class ViewController: UITableViewController, UpcomingTaskDataManagerDelegate, UI
         let task = upcomingTaskDataManager.taskSections[indexPath.section][indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = task.valueForKey("title") as! String?
-        
-        let taskDate = task.valueForKey("dueDate") as! NSDate
-        cell.detailTextLabel!.text = RelativeTimeDateFormatter().stringForDate(taskDate, relativeToDate: NSDate()).lowercaseString
+        cell.textLabel!.text = task.title
+        cell.detailTextLabel!.text = RelativeTimeDateFormatter().stringForDate(task.dueDate, relativeToDate: NSDate()).lowercaseString
         
         return cell
     }
