@@ -53,7 +53,7 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
         
         let fetchRequest = NSFetchRequest(entityName: "Task")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dueDate", ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "dueDate <= %@", argumentArray: [NSCalendar.currentCalendar().dateByAddingUnit(.Day, value: 10, toDate: NSDate(), options: NSCalendarOptions())!])
+        fetchRequest.predicate = NSPredicate(forTasksWithinNumberOfDays: 10, ofDate: NSDate())
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController!.delegate = self
         try! fetchedResultsController!.performFetch()
