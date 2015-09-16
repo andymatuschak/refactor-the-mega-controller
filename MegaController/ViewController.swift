@@ -11,41 +11,14 @@ import UIKit
 
 class ViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
 
-    private var fetchedResultsController: NSFetchedResultsController?
     var navigationThemeDidChangeHandler: ((NavigationTheme) -> Void)?
     var navigationTheme: NavigationTheme {
         return NavigationTheme(numberOfImminentTasks: fetchedResultsController?.fetchedObjects?.count ?? 0)
     }
     
-    lazy var applicationDocumentsDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-    }()
-    
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = NSBundle.mainBundle().URLForResource("MegaController", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
-    }()
-    
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
-        do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
-        } catch {
-            fatalError("Couldn't load database: \(error)")
-        }
+    private let coreDataStore = CoreDataStore()
+    private var fetchedResultsController: NSFetchedResultsController?
         
-        return coordinator
-    }()
-    
-    lazy var managedObjectContext: NSManagedObjectContext = {
-        let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = coordinator
-        return managedObjectContext
-    }()
-    
     private var taskSections: [[NSManagedObject]] = [[], [], []]
     
     override func viewDidLoad() {
@@ -54,7 +27,7 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
         let fetchRequest = NSFetchRequest(entityName: "Task")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dueDate", ascending: true)]
         fetchRequest.predicate = NSPredicate(forTasksWithinNumberOfDays: 10, ofDate: NSDate())
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStore.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController!.delegate = self
         try! fetchedResultsController!.performFetch()
         
@@ -83,7 +56,7 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        managedObjectContext.deleteObject(taskSections[indexPath.section][indexPath.row])
+        coreDataStore.managedObjectContext.deleteObject(taskSections[indexPath.section][indexPath.row])
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -197,9 +170,9 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate,
     @IBAction func unwindFromAddController(sender: UIStoryboardSegue) {
         let addViewController = (sender.sourceViewController as! AddViewController)
         
-        let newTask = NSManagedObject(entity: managedObjectContext.persistentStoreCoordinator!.managedObjectModel.entitiesByName["Task"]!, insertIntoManagedObjectContext: managedObjectContext)
+        let newTask = NSManagedObject(entity: coreDataStore.managedObjectContext.persistentStoreCoordinator!.managedObjectModel.entitiesByName["Task"]!, insertIntoManagedObjectContext: coreDataStore.managedObjectContext)
         newTask.setValue(addViewController.textField.text, forKey: "title")
         newTask.setValue(addViewController.datePicker.date, forKey: "dueDate")
-        try! managedObjectContext.save()
+        try! coreDataStore.managedObjectContext.save()
     }
 }
