@@ -9,9 +9,17 @@
 import UIKit
 
 class AddViewController: UIViewController {
-    
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var datePicker: UIDatePicker!
+
+	var taskTitle: String {
+		return textField.text!
+	}
+
+	var taskDueDate: NSDate {
+		return datePicker.date
+	}
+
+    @IBOutlet private weak var textField: UITextField!
+    @IBOutlet private weak var datePicker: UIDatePicker!
     
     override func viewWillAppear(animated: Bool) {
         textField.becomeFirstResponder()

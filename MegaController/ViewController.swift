@@ -113,8 +113,7 @@ class ViewController: UITableViewController, UpcomingTaskDataManagerDelegate, UI
         return 0.4
     }
     
-    @IBAction func unwindFromAddController(sender: UIStoryboardSegue) {
-        let addViewController = (sender.sourceViewController as! AddViewController)
-        upcomingTaskDataManager.createTaskWithTitle(addViewController.textField.text!, dueDate: addViewController.datePicker.date)
+    @IBAction func unwindFromAddController(segue: AddCompletionSegue) {
+		upcomingTaskDataManager.createTaskWithTitle(segue.taskTitle, dueDate: segue.taskDueDate)
     }
 }

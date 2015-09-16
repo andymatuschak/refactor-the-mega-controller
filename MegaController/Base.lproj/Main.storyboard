@@ -83,7 +83,7 @@
                                             <navigationItem title="New Task" id="Htq-Ps-RSE">
                                                 <barButtonItem key="rightBarButtonItem" systemItem="done" id="vLx-9V-U8y">
                                                     <connections>
-                                                        <segue destination="t2b-8M-HsK" kind="unwind" unwindAction="unwindFromAddController:" id="xwC-Pd-rgQ"/>
+                                                        <segue destination="t2b-8M-HsK" kind="unwind" customClass="AddCompletionSegue" customModule="MegaController" customModuleProvider="target" unwindAction="unwindFromAddController:" id="xwC-Pd-rgQ"/>
                                                     </connections>
                                                 </barButtonItem>
                                             </navigationItem>

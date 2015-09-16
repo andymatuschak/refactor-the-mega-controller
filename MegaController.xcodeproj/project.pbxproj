@@ -30,6 +30,7 @@
 		EB6700E91BAA2C0100DF68F7 /* UpcomingTaskResultsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700E81BAA2C0100DF68F7 /* UpcomingTaskResultsCacheTests.swift */; };
 		EB6700EB1BAA2ED000DF68F7 /* UpcomiungTaskSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700EA1BAA2ED000DF68F7 /* UpcomiungTaskSectionTests.swift */; };
 		EB6700ED1BAA331100DF68F7 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */; };
+		EB6700EF1BAA362700DF68F7 /* AddCompletionSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700EE1BAA362700DF68F7 /* AddCompletionSegue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		EB6700E81BAA2C0100DF68F7 /* UpcomingTaskResultsCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingTaskResultsCacheTests.swift; sourceTree = "<group>"; };
 		EB6700EA1BAA2ED000DF68F7 /* UpcomiungTaskSectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomiungTaskSectionTests.swift; sourceTree = "<group>"; };
 		EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		EB6700EE1BAA362700DF68F7 /* AddCompletionSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCompletionSegue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				61772D9F1B9FB3CD00FBF11D /* UpcomingTaskSection.swift */,
 				61772DA11B9FB72300FBF11D /* UpcomingTaskResultsCache.swift */,
 				61B7AB391B9EA02E004CE41C /* AddViewController.swift */,
+				EB6700EE1BAA362700DF68F7 /* AddCompletionSegue.swift */,
 				61B7AB3B1B9F9B83004CE41C /* CoreDataStore.swift */,
 				EB0C53021BAA20B400A9991A /* Task.swift */,
 				61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */,
@@ -261,6 +264,7 @@
 				61772DA01B9FB3CD00FBF11D /* UpcomingTaskSection.swift in Sources */,
 				61B7AB3E1B9F9F37004CE41C /* NavigationTheme.swift in Sources */,
 				614991C01B9E3D9A005278F8 /* ViewController.swift in Sources */,
+				EB6700EF1BAA362700DF68F7 /* AddCompletionSegue.swift in Sources */,
 				61772D961B9FAC9F00FBF11D /* ImminentDueDatePredicate.swift in Sources */,
 				614991BE1B9E3D9A005278F8 /* AppDelegate.swift in Sources */,
 				EB0C53031BAA20B400A9991A /* Task.swift in Sources */,
