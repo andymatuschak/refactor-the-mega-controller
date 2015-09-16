@@ -47,10 +47,8 @@ class ViewController: UITableViewController, UpcomingTaskDataManagerDelegate, UI
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let task = upcomingTaskDataManager.taskSections[indexPath.section][indexPath.row]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = task.title
-        cell.detailTextLabel!.text = RelativeTimeDateFormatter().stringForDate(task.dueDate, relativeToDate: NSDate()).lowercaseString
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TaskTableViewCell
+		cell.viewData = TaskTableViewCell.ViewData(task: task, relativeToDate: NSDate())
         return cell
     }
     

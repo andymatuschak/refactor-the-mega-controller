@@ -29,6 +29,7 @@
 		EB0C53031BAA20B400A9991A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0C53021BAA20B400A9991A /* Task.swift */; };
 		EB6700E91BAA2C0100DF68F7 /* UpcomingTaskResultsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700E81BAA2C0100DF68F7 /* UpcomingTaskResultsCacheTests.swift */; };
 		EB6700EB1BAA2ED000DF68F7 /* UpcomiungTaskSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700EA1BAA2ED000DF68F7 /* UpcomiungTaskSectionTests.swift */; };
+		EB6700ED1BAA331100DF68F7 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		EB0C53021BAA20B400A9991A /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		EB6700E81BAA2C0100DF68F7 /* UpcomingTaskResultsCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingTaskResultsCacheTests.swift; sourceTree = "<group>"; };
 		EB6700EA1BAA2ED000DF68F7 /* UpcomiungTaskSectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomiungTaskSectionTests.swift; sourceTree = "<group>"; };
+		EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				614991BD1B9E3D9A005278F8 /* AppDelegate.swift */,
 				6190188F1B9E962000A0EF74 /* NavigationController.swift */,
 				614991BF1B9E3D9A005278F8 /* ViewController.swift */,
+				EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */,
 				61772D9D1B9FB00A00FBF11D /* UpcomingTaskDataManager.swift */,
 				61772D9F1B9FB3CD00FBF11D /* UpcomingTaskSection.swift */,
 				61772DA11B9FB72300FBF11D /* UpcomingTaskResultsCache.swift */,
@@ -249,6 +252,7 @@
 			files = (
 				61772DA21B9FB72300FBF11D /* UpcomingTaskResultsCache.swift in Sources */,
 				61B7AB3C1B9F9B83004CE41C /* CoreDataStore.swift in Sources */,
+				EB6700ED1BAA331100DF68F7 /* TaskTableViewCell.swift in Sources */,
 				61B7AB3A1B9EA02E004CE41C /* AddViewController.swift in Sources */,
 				614991C61B9E3D9A005278F8 /* MegaController.xcdatamodeld in Sources */,
 				61772D9E1B9FB00A00FBF11D /* UpcomingTaskDataManager.swift in Sources */,
