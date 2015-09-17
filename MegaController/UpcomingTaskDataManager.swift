@@ -9,12 +9,17 @@
 import CoreData
 
 class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
-    var taskSections: [[Task]] {
-        return resultsCache.sections
+    var taskSections: [Section<Task>] {
+		return resultsCache.sections.enumerate().map { index, tasks in
+			return Section(
+				title: UpcomingTaskSection(rawValue: index)!.title,
+				items: tasks
+			)
+		}
     }
     
     var totalNumberOfTasks: Int {
-        return taskSections.map { $0.count }.reduce(0, combine: +)
+        return taskSections.map { $0.items.count }.reduce(0, combine: +)
     }
     
     var delegate: UpcomingTaskDataManagerDelegate?
@@ -82,6 +87,11 @@ class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
 		let results = try! coreDataStore.managedObjectContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
 		return results.first!
 	}
+}
+
+struct Section<Item> {
+	let title: String
+	let items: [Item]
 }
 
 protocol UpcomingTaskDataManagerDelegate {
