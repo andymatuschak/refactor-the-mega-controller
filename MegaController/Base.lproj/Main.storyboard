@@ -52,7 +52,7 @@
                     <navigationItem key="navigationItem" title="Root View Controller" id="5y8-PJ-S1E">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Duv-Oz-ZC2">
                             <connections>
-                                <segue destination="I6w-DC-SEH" kind="presentation" identifier="Add" id="SqP-Ys-Gd8"/>
+                                <segue destination="I6w-DC-SEH" kind="presentation" identifier="Add" customClass="AddPresentationSegue" customModule="MegaController" customModuleProvider="target" id="SqP-Ys-Gd8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
