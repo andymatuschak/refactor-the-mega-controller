@@ -2,7 +2,7 @@
 
 Hello! This project needs some explanation.
 
-This is the companion source for a talk I've been giving under the same name. You can [watch the "improvised" version](https://realm.io/news/andy-matuschak-refactor-mega-controller/) of it at Realm; this source corresponds to a more prepared version I gave at NSSpain.
+This is the companion source for [a talk I've been giving](https://vimeo.com/140037432) under the same name. You can also [watch a more "improvised" version](https://realm.io/news/andy-matuschak-refactor-mega-controller/) of it I gave at Realm.
 
 The idea is to take a highly-coupled, highly-ugly view controller implementation and to incrementally isolate, abstract, and test components of it, reducing dependencies of each piece along the way.
 
