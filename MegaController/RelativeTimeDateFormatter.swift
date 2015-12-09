@@ -15,13 +15,21 @@ struct RelativeTimeDateFormatter {
         self.calendar = calendar
     }
     
-    func stringForDate(date: NSDate, relativeToDate baseDate: NSDate) -> String {
-        var beginningOfDate: NSDate? = nil
-        var beginningOfBaseDate: NSDate? = nil
+    func getNumberOfCalendarDaysBetweenDates(startDate: NSDate, _ endDate: NSDate) ->  Int {
+        var beginningOfStartDate: NSDate? = nil
+        var beginningOfEndDate: NSDate? = nil
         
-        calendar.rangeOfUnit(.Day, startDate: &beginningOfDate, interval: nil, forDate: date)
-        calendar.rangeOfUnit(.Day, startDate: &beginningOfBaseDate, interval: nil, forDate: baseDate)
-        let numberOfCalendarDaysBetweenDates = calendar.components(NSCalendarUnit.Day, fromDate: beginningOfBaseDate!, toDate: beginningOfDate!, options: NSCalendarOptions()).day
+        calendar.rangeOfUnit(.Day, startDate: &beginningOfStartDate, interval: nil, forDate: startDate)
+        calendar.rangeOfUnit(.Day, startDate: &beginningOfEndDate, interval: nil, forDate: endDate)
+        return calendar.components(
+            .Day,
+            fromDate: beginningOfStartDate!, toDate: beginningOfEndDate!,
+            options: NSCalendarOptions()
+        ).day
+    }
+    
+    func stringForDate(date: NSDate, relativeToDate baseDate: NSDate) -> String {
+        let numberOfCalendarDaysBetweenDates = getNumberOfCalendarDaysBetweenDates(baseDate, date)
         
         switch numberOfCalendarDaysBetweenDates {
         case -Int.max ... -2:
