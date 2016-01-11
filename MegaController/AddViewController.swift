@@ -22,6 +22,7 @@ class AddViewController: UIViewController {
     @IBOutlet private weak var datePicker: UIDatePicker!
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         textField.becomeFirstResponder()
     }
 }
