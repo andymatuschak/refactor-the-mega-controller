@@ -97,6 +97,116 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0939F4DC1BACEF8500B43F9D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0939F4DD1BACEF9100B43F9D /* Storyboards */,
+				0939F4DE1BACEF9B00B43F9D /* Other-Sources */,
+				614991C71B9E3D9A005278F8 /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		0939F4DD1BACEF9100B43F9D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				614991C11B9E3D9A005278F8 /* Main.storyboard */,
+				614991C91B9E3D9A005278F8 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		0939F4DE1BACEF9B00B43F9D /* Other-Sources */ = {
+			isa = PBXGroup;
+			children = (
+				614991CC1B9E3D9A005278F8 /* Info.plist */,
+			);
+			name = "Other-Sources";
+			sourceTree = "<group>";
+		};
+		096F48D41BACEA2800E832EB /* Theming */ = {
+			isa = PBXGroup;
+			children = (
+				61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */,
+				61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */,
+			);
+			name = Theming;
+			sourceTree = "<group>";
+		};
+		096F48D51BACEA8400E832EB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				096F48D91BACEB6100E832EB /* Predicates */,
+				EB0C53021BAA20B400A9991A /* Task.swift */,
+				61B7AB3B1B9F9B83004CE41C /* CoreDataStore.swift */,
+				61772DA11B9FB72300FBF11D /* UpcomingTaskResultsCache.swift */,
+				61772D9D1B9FB00A00FBF11D /* UpcomingTaskDataManager.swift */,
+				61772D9F1B9FB3CD00FBF11D /* UpcomingTaskSection.swift */,
+				614991C41B9E3D9A005278F8 /* MegaController.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		096F48D61BACEAB200E832EB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				096F48D81BACEB1500E832EB /* Segues */,
+				096F48D71BACEAED00E832EB /* Transitions */,
+				61B7AB391B9EA02E004CE41C /* AddViewController.swift */,
+				6190188F1B9E962000A0EF74 /* NavigationController.swift */,
+				614991BF1B9E3D9A005278F8 /* ViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		096F48D71BACEAED00E832EB /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				EB6700F21BAA377C00DF68F7 /* AddPresentationSegue.swift */,
+			);
+			name = Transitions;
+			sourceTree = "<group>";
+		};
+		096F48D81BACEB1500E832EB /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				EB6700EE1BAA362700DF68F7 /* AddCompletionSegue.swift */,
+			);
+			name = Segues;
+			sourceTree = "<group>";
+		};
+		096F48D91BACEB6100E832EB /* Predicates */ = {
+			isa = PBXGroup;
+			children = (
+				61772D951B9FAC9F00FBF11D /* ImminentDueDatePredicate.swift */,
+			);
+			name = Predicates;
+			sourceTree = "<group>";
+		};
+		096F48DA1BACEC1800E832EB /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				EB6700F41BAA38C300DF68F7 /* UpcomingTaskDataManagerTableViewAdapter.swift */,
+			);
+			name = Adapters;
+			sourceTree = "<group>";
+		};
+		096F48DB1BACECFC00E832EB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		096F48DC1BACED5900E832EB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				61772D8F1B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		614991B11B9E3D9A005278F8 = {
 			isa = PBXGroup;
 			children = (
@@ -118,27 +228,13 @@
 			isa = PBXGroup;
 			children = (
 				614991BD1B9E3D9A005278F8 /* AppDelegate.swift */,
-				6190188F1B9E962000A0EF74 /* NavigationController.swift */,
-				614991BF1B9E3D9A005278F8 /* ViewController.swift */,
-				EB6700EC1BAA331100DF68F7 /* TaskTableViewCell.swift */,
-				61772D9D1B9FB00A00FBF11D /* UpcomingTaskDataManager.swift */,
-				EB6700F41BAA38C300DF68F7 /* UpcomingTaskDataManagerTableViewAdapter.swift */,
-				61772D9F1B9FB3CD00FBF11D /* UpcomingTaskSection.swift */,
-				61772DA11B9FB72300FBF11D /* UpcomingTaskResultsCache.swift */,
-				61B7AB391B9EA02E004CE41C /* AddViewController.swift */,
-				EB6700F21BAA377C00DF68F7 /* AddPresentationSegue.swift */,
-				EB6700EE1BAA362700DF68F7 /* AddCompletionSegue.swift */,
-				61B7AB3B1B9F9B83004CE41C /* CoreDataStore.swift */,
-				EB0C53021BAA20B400A9991A /* Task.swift */,
-				61B7AB3D1B9F9F37004CE41C /* NavigationTheme.swift */,
-				61772D8D1B9FA51900FBF11D /* UINavigationBar+Theme.swift */,
-				61772D8F1B9FA8D300FBF11D /* RelativeTimeDateFormatter.swift */,
-				61772D951B9FAC9F00FBF11D /* ImminentDueDatePredicate.swift */,
-				614991C11B9E3D9A005278F8 /* Main.storyboard */,
-				614991C71B9E3D9A005278F8 /* Assets.xcassets */,
-				614991C91B9E3D9A005278F8 /* LaunchScreen.storyboard */,
-				614991CC1B9E3D9A005278F8 /* Info.plist */,
-				614991C41B9E3D9A005278F8 /* MegaController.xcdatamodeld */,
+				096F48D41BACEA2800E832EB /* Theming */,
+				096F48DB1BACECFC00E832EB /* Views */,
+				096F48D61BACEAB200E832EB /* ViewControllers */,
+				096F48DA1BACEC1800E832EB /* Adapters */,
+				096F48D51BACEA8400E832EB /* Model */,
+				096F48DC1BACED5900E832EB /* Utils */,
+				0939F4DC1BACEF8500B43F9D /* Resources */,
 				614991D41B9E3D9A005278F8 /* MegaControllerTests */,
 			);
 			path = MegaController;
