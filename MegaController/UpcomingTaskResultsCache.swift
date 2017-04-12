@@ -9,37 +9,37 @@
 import Foundation
 
 struct UpcomingTaskResultsCache {
-    var sections: [[Task]] = Array(count: UpcomingTaskSection.numberOfSections, repeatedValue: [])
-	let baseDate: NSDate
+    var sections: [[Task]] = Array(repeating: [], count: UpcomingTaskSection.numberOfSections)
+	let baseDate: Date
     
-    init(initialTasksSortedAscendingByDate: [Task], baseDate: NSDate) {
+    init(initialTasksSortedAscendingByDate: [Task], baseDate: Date) {
 		self.baseDate = baseDate
         for task in initialTasksSortedAscendingByDate {
             sections[sectionIndexForTask(task)].append(task)
         }
     }
     
-    mutating func insertTask(task: Task) -> NSIndexPath {
+    mutating func insertTask(_ task: Task) -> IndexPath {
         let insertedTaskDate = task.dueDate
         let sectionIndex = sectionIndexForTask(task)
-        let insertionIndex = sections[sectionIndex].indexOf { task in
+        let insertionIndex = sections[sectionIndex].index { task in
             let otherTaskDate = task.dueDate
-            return insertedTaskDate.compare(otherTaskDate) == .OrderedAscending
+            return insertedTaskDate.compare(otherTaskDate as Date) == .orderedAscending
 		} ?? sections[sectionIndex].count
-        sections[sectionIndex].insert(task, atIndex: insertionIndex)
+        sections[sectionIndex].insert(task, at: insertionIndex)
         
-        return NSIndexPath(forRow: insertionIndex, inSection: sectionIndex)
+        return IndexPath(row: insertionIndex, section: sectionIndex)
     }
     
-    mutating func deleteTask(task: Task) -> NSIndexPath {
+    mutating func deleteTask(_ task: Task) -> IndexPath {
         let sectionIndex = sectionIndexForTask(task)
-        let deletedTaskIndex = sections[sectionIndex].indexOf(task)!
-        sections[sectionIndex].removeAtIndex(deletedTaskIndex)
+        let deletedTaskIndex = sections[sectionIndex].index(of: task)!
+        sections[sectionIndex].remove(at: deletedTaskIndex)
         
-        return NSIndexPath(forRow: deletedTaskIndex, inSection: sectionIndex)
+        return IndexPath(row: deletedTaskIndex, section: sectionIndex)
     }
     
-    private func sectionIndexForTask(task: Task) -> Int {
+    fileprivate func sectionIndexForTask(_ task: Task) -> Int {
         let dueDate = task.dueDate
         return UpcomingTaskSection(forTaskDueDate: dueDate, baseDate: baseDate).rawValue
     }

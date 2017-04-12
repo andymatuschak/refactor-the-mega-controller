@@ -10,16 +10,16 @@
 import XCTest
 
 class ImminentDueDateTests: XCTestCase {
-	static let calendar = NSCalendar.currentCalendar()
-    static let referenceDate = NSDate(timeIntervalSinceReferenceDate: 0)
+	static let calendar = Calendar.current
+    static let referenceDate = Date(timeIntervalSinceReferenceDate: 0)
 	static let oneDayPredicate = NSPredicate(forTasksWithinNumberOfDays: 1, ofDate: referenceDate, calendar: calendar)
 
     func testPredicateMatchesDatesWithinBounds() {
-        XCTAssertTrue(ImminentDueDateTests.oneDayPredicate.evaluateWithObject(["dueDate": NSDate(timeIntervalSinceReferenceDate: 1000)]))
+        XCTAssertTrue(ImminentDueDateTests.oneDayPredicate.evaluate(with: ["dueDate": Date(timeIntervalSinceReferenceDate: 1000)]))
     }
     
     func testPredicateDoesNotMatchFurtherDates() {
-        let twoDays = ImminentDueDateTests.calendar.dateByAddingUnit(.Day, value: 2, toDate: ImminentDueDateTests.referenceDate, options: NSCalendarOptions())!
-        XCTAssertFalse(ImminentDueDateTests.oneDayPredicate.evaluateWithObject(["dueDate": twoDays]))
+        let twoDays = (ImminentDueDateTests.calendar as NSCalendar).date(byAdding: .day, value: 2, to: ImminentDueDateTests.referenceDate, options: NSCalendar.Options())!
+        XCTAssertFalse(ImminentDueDateTests.oneDayPredicate.evaluate(with: ["dueDate": twoDays]))
     }
 }

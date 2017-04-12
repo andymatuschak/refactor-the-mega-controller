@@ -14,8 +14,8 @@ class ViewController: UITableViewController {
         return NavigationTheme(numberOfImminentTasks: upcomingTaskDataManager.totalNumberOfTasks)
     }
     
-    private let upcomingTaskDataManager = UpcomingTaskDataManager()
-	private var upcomingTaskDataManagerTableViewAdapter: UpcomingTaskDataManagerTableViewAdapter<TaskTableViewCell>!
+    fileprivate let upcomingTaskDataManager = UpcomingTaskDataManager()
+	fileprivate var upcomingTaskDataManagerTableViewAdapter: UpcomingTaskDataManagerTableViewAdapter<TaskTableViewCell>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class ViewController: UITableViewController {
 			upcomingTaskDataManager: upcomingTaskDataManager,
 			cellReuseIdentifier: "Cell",
 			cellConfigurationHandler: { cell, task in
-				cell.viewData = TaskTableViewCell.ViewData(task: task, relativeToDate: NSDate())
+				cell.viewData = TaskTableViewCell.ViewData(task: task, relativeToDate: Date())
 			},
 			didChangeHandler: { [weak self] in self?.updateNavigationBar() }
 		)
@@ -35,7 +35,7 @@ class ViewController: UITableViewController {
         updateNavigationBar()
     }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
@@ -43,7 +43,7 @@ class ViewController: UITableViewController {
         navigationThemeDidChangeHandler?(navigationTheme)
     }
 
-    @IBAction func unwindFromAddController(segue: AddCompletionSegue) {
+    @IBAction func unwindFromAddController(_ segue: AddCompletionSegue) {
 		upcomingTaskDataManager.createTaskWithTitle(segue.taskTitle, dueDate: segue.taskDueDate)
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 extension NSPredicate {
-	convenience init(forTasksWithinNumberOfDays numberOfDays: Int, ofDate date: NSDate, calendar: NSCalendar = NSCalendar.currentCalendar()) {
-        self.init(format: "dueDate <= %@", argumentArray: [calendar.dateByAddingUnit(.Day, value: numberOfDays, toDate: date, options: NSCalendarOptions())!])
+	convenience init(forTasksWithinNumberOfDays numberOfDays: Int, ofDate date: Date, calendar: Calendar = Calendar.current) {
+        self.init(format: "dueDate <= %@", argumentArray: [(calendar as NSCalendar).date(byAdding: .day, value: numberOfDays, to: date, options: NSCalendar.Options())!])
     }
 }

@@ -12,21 +12,21 @@ import XCTest
 class UpcomiungTaskSectionTests: XCTestCase {
 
 	func testTaskAtBaseDateIsInNowSection() {
-		let testDate = NSDate()
-		XCTAssertEqual(UpcomingTaskSection(forTaskDueDate: testDate, baseDate: testDate), UpcomingTaskSection.Now)
+		let testDate = Date()
+		XCTAssertEqual(UpcomingTaskSection(forTaskDueDate: testDate, baseDate: testDate), UpcomingTaskSection.now)
 	}
 
 	func testTaskInSeveralDaysIsInSoonSection() {
-		let baseDate = NSDate()
-		let calendar = NSCalendar.currentCalendar()
-		let soonDate = calendar.dateByAddingUnit(.Day, value: 3, toDate: baseDate, options: NSCalendarOptions())!
-		XCTAssertEqual(UpcomingTaskSection(forTaskDueDate: soonDate, baseDate: baseDate, calendar: calendar), UpcomingTaskSection.Soon)
+		let baseDate = Date()
+		let calendar = Calendar.current
+		let soonDate = (calendar as NSCalendar).date(byAdding: .day, value: 3, to: baseDate, options: NSCalendar.Options())!
+		XCTAssertEqual(UpcomingTaskSection(forTaskDueDate: soonDate, baseDate: baseDate, calendar: calendar), UpcomingTaskSection.soon)
 	}
 
 	func testTaskInManyDaysIsInUpcomingSection() {
-		let baseDate = NSDate()
-		let calendar = NSCalendar.currentCalendar()
-		let upcomingDate = calendar.dateByAddingUnit(.Day, value: 10, toDate: baseDate, options: NSCalendarOptions())!
-		XCTAssertEqual(UpcomingTaskSection(forTaskDueDate: upcomingDate, baseDate: baseDate, calendar: calendar), UpcomingTaskSection.Upcoming)
+		let baseDate = Date()
+		let calendar = Calendar.current
+		let upcomingDate = (calendar as NSCalendar).date(byAdding: .day, value: 10, to: baseDate, options: NSCalendar.Options())!
+		XCTAssertEqual(UpcomingTaskSection(forTaskDueDate: upcomingDate, baseDate: baseDate, calendar: calendar), UpcomingTaskSection.upcoming)
 	}
 }

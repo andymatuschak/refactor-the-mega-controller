@@ -10,7 +10,7 @@ import CoreData
 
 class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
     var taskSections: [Section<Task>] {
-		return resultsCache.sections.enumerate().map { index, tasks in
+		return resultsCache.sections.enumerated().map { index, tasks in
 			return Section(
 				title: UpcomingTaskSection(rawValue: index)!.title,
 				items: tasks
@@ -19,72 +19,72 @@ class UpcomingTaskDataManager: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     var totalNumberOfTasks: Int {
-        return taskSections.map { $0.items.count }.reduce(0, combine: +)
+        return taskSections.map { $0.items.count }.reduce(0, +)
     }
     
     var delegate: UpcomingTaskDataManagerDelegate?
     
-    private let coreDataStore = CoreDataStore()
-    private var fetchedResultsController: NSFetchedResultsController
-    private var resultsCache: UpcomingTaskResultsCache
+    fileprivate let coreDataStore = CoreDataStore()
+    fileprivate var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>
+    fileprivate var resultsCache: UpcomingTaskResultsCache
     
     
     override init() {
-        let fetchRequest = NSFetchRequest(entityName: "Task")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dueDate", ascending: true)]
-        fetchRequest.predicate = NSPredicate(forTasksWithinNumberOfDays: 10, ofDate: NSDate())
+        fetchRequest.predicate = NSPredicate(forTasksWithinNumberOfDays: 10, ofDate: Date())
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStore.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
         try! fetchedResultsController.performFetch()
 
 		let managedTasks = fetchedResultsController.fetchedObjects! as! [NSManagedObject]
-		resultsCache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: managedTasks.map { Task(managedTask: $0) }, baseDate: NSDate())
+		resultsCache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: managedTasks.map { Task(managedTask: $0) }, baseDate: Date())
 
         super.init()
         
         fetchedResultsController.delegate = self
     }
     
-    func deleteTask(task: Task) {
-        coreDataStore.managedObjectContext.deleteObject(managedTaskForTask(task))
+    func deleteTask(_ task: Task) {
+        coreDataStore.managedObjectContext.delete(managedTaskForTask(task))
         try! coreDataStore.managedObjectContext.save()
     }
     
-    func createTaskWithTitle(title: String, dueDate: NSDate) {
-        let newTask = NSManagedObject(entity: coreDataStore.managedObjectContext.persistentStoreCoordinator!.managedObjectModel.entitiesByName["Task"]!, insertIntoManagedObjectContext: coreDataStore.managedObjectContext)
-		newTask.setValue(NSUUID().UUIDString, forKey: "id")
+    func createTaskWithTitle(_ title: String, dueDate: Date) {
+        let newTask = NSManagedObject(entity: coreDataStore.managedObjectContext.persistentStoreCoordinator!.managedObjectModel.entitiesByName["Task"]!, insertInto: coreDataStore.managedObjectContext)
+		newTask.setValue(UUID().uuidString, forKey: "id")
         newTask.setValue(title, forKey: "title")
         newTask.setValue(dueDate, forKey: "dueDate")
         try! coreDataStore.managedObjectContext.save()
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.dataManagerWillChangeContent(self)
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.dataManagerDidChangeContent(self)
     }
     
-	func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+	func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 		let task = Task(managedTask: anObject as! NSManagedObject)
         switch type {
-        case .Insert:
+        case .insert:
             let insertedIndexPath = resultsCache.insertTask(task)
             delegate?.dataManager(self, didInsertRowAtIndexPath: insertedIndexPath)
-        case .Delete:
+        case .delete:
             let deletedIndexPath = resultsCache.deleteTask(task)
             delegate?.dataManager(self, didDeleteRowAtIndexPath: deletedIndexPath)
-        case .Move, .Update:
+        case .move, .update:
             fatalError("Unsupported")
         }
     }
 
-	private func managedTaskForTask(task: Task) -> NSManagedObject {
-		let fetchRequest = NSFetchRequest(entityName: "Task")
+	fileprivate func managedTaskForTask(_ task: Task) -> NSManagedObject {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
 		fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [task.id])
 		fetchRequest.fetchLimit = 1
-		let results = try! coreDataStore.managedObjectContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+		let results = try! coreDataStore.managedObjectContext.fetch(fetchRequest) as! [NSManagedObject]
 		return results.first!
 	}
 }
@@ -95,8 +95,8 @@ struct Section<Item> {
 }
 
 protocol UpcomingTaskDataManagerDelegate {
-    func dataManagerWillChangeContent(dataManager: UpcomingTaskDataManager)
-    func dataManagerDidChangeContent(dataManager: UpcomingTaskDataManager)
-    func dataManager(dataManager: UpcomingTaskDataManager, didInsertRowAtIndexPath indexPath: NSIndexPath)
-    func dataManager(dataManager: UpcomingTaskDataManager, didDeleteRowAtIndexPath indexPath: NSIndexPath)
+    func dataManagerWillChangeContent(_ dataManager: UpcomingTaskDataManager)
+    func dataManagerDidChangeContent(_ dataManager: UpcomingTaskDataManager)
+    func dataManager(_ dataManager: UpcomingTaskDataManager, didInsertRowAtIndexPath indexPath: IndexPath)
+    func dataManager(_ dataManager: UpcomingTaskDataManager, didDeleteRowAtIndexPath indexPath: IndexPath)
 }

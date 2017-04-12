@@ -12,7 +12,7 @@ import Foundation
 struct Task: Equatable {
 	var id: String
 	var title: String
-	var dueDate: NSDate
+	var dueDate: Date
 }
 
 func ==(lhs: Task, rhs: Task) -> Bool {
@@ -21,8 +21,8 @@ func ==(lhs: Task, rhs: Task) -> Bool {
 
 extension Task {
 	init(managedTask: NSManagedObject) {
-		self.id = managedTask.valueForKey("id") as! String
-		self.title = managedTask.valueForKey("title") as! String
-		self.dueDate = managedTask.valueForKey("dueDate") as! NSDate
+		self.id = managedTask.value(forKey: "id") as! String
+		self.title = managedTask.value(forKey: "title") as! String
+		self.dueDate = managedTask.value(forKey: "dueDate") as! Date
 	}
 }

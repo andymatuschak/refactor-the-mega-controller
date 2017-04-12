@@ -9,43 +9,43 @@
 import UIKit
 
 enum NavigationTheme {
-    case Normal
-    case Warning
-    case Doomed
+    case normal
+    case warning
+    case doomed
     
     var statusBarStyle: UIStatusBarStyle {
         switch self {
-        case .Normal: return .Default
-        case .Warning, .Doomed: return .LightContent
+        case .normal: return .default
+        case .warning, .doomed: return .lightContent
         }
     }
     
     var barTintColor: UIColor? {
         switch self {
-        case .Normal:
+        case .normal:
             return nil
-        case .Warning:
+        case .warning:
             return UIColor(red: 235/255, green: 156/255, blue: 77/255, alpha: 1.0)
-        case .Doomed:
+        case .doomed:
             return UIColor(red: 248/255, green: 73/255, blue: 68/255, alpha: 1.0)
         }
     }
     
     var titleTextAttributes: [String: NSObject]? {
         switch self {
-        case .Normal:
+        case .normal:
             return nil
-        case .Warning, .Doomed:
-            return [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        case .warning, .doomed:
+            return [NSForegroundColorAttributeName: UIColor.white]
         }
     }
     
     var tintColor: UIColor? {
         switch self {
-        case .Normal:
+        case .normal:
             return nil
-        case .Warning, .Doomed:
-            return UIColor.whiteColor()
+        case .warning, .doomed:
+            return UIColor.white
         }
     }
 }
@@ -54,11 +54,11 @@ extension NavigationTheme {
     init(numberOfImminentTasks: Int) {
         switch numberOfImminentTasks {
         case -Int.max ... 3:
-            self = .Normal
+            self = .normal
         case 4...9:
-            self = .Warning
+            self = .warning
         default:
-            self = .Doomed
+            self = .doomed
         }
     }
 }
