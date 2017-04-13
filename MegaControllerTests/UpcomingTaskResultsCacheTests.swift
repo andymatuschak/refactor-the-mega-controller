@@ -12,8 +12,8 @@ import XCTest
 class UpcomingTaskResultsCacheTests: XCTestCase {
 
     func testAddingAndDeletingTaskChangesNothing() {
-		let originalCache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [], baseDate: NSDate())
-		let task = Task(id: "a", title: "task", dueDate: NSDate())
+		let originalCache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [], baseDate: Date())
+		let task = Task(id: "a", title: "task", dueDate: Date())
 
 		var testCache = originalCache
 		testCache.insertTask(task)
@@ -24,26 +24,26 @@ class UpcomingTaskResultsCacheTests: XCTestCase {
     }
 
 	func testAddingTaskToEmptySection() {
-		var cache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [], baseDate: NSDate())
-		let task = Task(id: "a", title: "task", dueDate: NSDate())
+		var cache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [], baseDate: Date())
+		let task = Task(id: "a", title: "task", dueDate: Date())
 		cache.insertTask(task)
 		XCTAssertEqual(cache.sections[0][0], task)
 	}
 
 	func testAddingEarlierTaskToSection() {
-		let earlierTask = Task(id: "a", title: "earlier task", dueDate: NSDate(timeIntervalSinceReferenceDate: 0))
-		let laterTask = Task(id: "b", title: "later task", dueDate: NSDate(timeIntervalSinceReferenceDate: 100))
+		let earlierTask = Task(id: "a", title: "earlier task", dueDate: Date(timeIntervalSinceReferenceDate: 0))
+		let laterTask = Task(id: "b", title: "later task", dueDate: Date(timeIntervalSinceReferenceDate: 100))
 
-		var cache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [laterTask], baseDate: NSDate(timeIntervalSinceReferenceDate: 0))
+		var cache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [laterTask], baseDate: Date(timeIntervalSinceReferenceDate: 0))
 		cache.insertTask(earlierTask)
 		XCTAssertEqual(cache.sections[0], [earlierTask, laterTask])
 	}
 
 	func testAddingLaterTaskToSection() {
-		let earlierTask = Task(id: "a", title: "earlier task", dueDate: NSDate(timeIntervalSinceReferenceDate: 0))
-		let laterTask = Task(id: "b", title: "later task", dueDate: NSDate(timeIntervalSinceReferenceDate: 100))
+		let earlierTask = Task(id: "a", title: "earlier task", dueDate: Date(timeIntervalSinceReferenceDate: 0))
+		let laterTask = Task(id: "b", title: "later task", dueDate: Date(timeIntervalSinceReferenceDate: 100))
 
-		var cache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [earlierTask], baseDate: NSDate(timeIntervalSinceReferenceDate: 0))
+		var cache = UpcomingTaskResultsCache(initialTasksSortedAscendingByDate: [earlierTask], baseDate: Date(timeIntervalSinceReferenceDate: 0))
 		cache.insertTask(laterTask)
 		XCTAssertEqual(cache.sections[0], [earlierTask, laterTask])
 	}

@@ -9,7 +9,7 @@
 import UIKit
 
 extension UINavigationBar {
-    func applyTheme(navigationTheme: NavigationTheme) {
+    func applyTheme(_ navigationTheme: NavigationTheme) {
         barTintColor = navigationTheme.barTintColor
         tintColor = navigationTheme.tintColor
         titleTextAttributes = navigationTheme.titleTextAttributes

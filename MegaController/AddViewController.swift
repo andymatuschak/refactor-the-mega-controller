@@ -14,14 +14,14 @@ class AddViewController: UIViewController {
 		return textField.text!
 	}
 
-	var taskDueDate: NSDate {
+	var taskDueDate: Date {
 		return datePicker.date
 	}
 
-    @IBOutlet private weak var textField: UITextField!
-    @IBOutlet private weak var datePicker: UIDatePicker!
+    @IBOutlet fileprivate weak var textField: UITextField!
+    @IBOutlet fileprivate weak var datePicker: UIDatePicker!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         textField.becomeFirstResponder()
     }

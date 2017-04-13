@@ -18,10 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     lazy var primaryViewController: ViewController = {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Primary") as! ViewController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Primary") as! ViewController
     }()
     
-    func applicationDidFinishLaunching(application: UIApplication) {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
         primaryViewController.navigationThemeDidChangeHandler = { [weak self] theme in
             if let navigationController = self?.navigationController {
                 navigationController.navigationBar.applyTheme(theme)

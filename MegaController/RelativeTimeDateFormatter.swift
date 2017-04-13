@@ -8,20 +8,27 @@
 
 import Foundation
 
+
+extension Date {
+  func numberOfDaysUntilDateTime(toDateTime: Date, calendar: Calendar) -> Int {
+    let fromDate = calendar.startOfDay(for: self)
+    let toDate = calendar.startOfDay(for: toDateTime)
+    let difference = calendar.dateComponents([.day], from: fromDate, to: toDate)
+    return difference.day!
+  }
+}
+
 struct RelativeTimeDateFormatter {
-    let calendar: NSCalendar
-    
-    init(calendar: NSCalendar = NSCalendar.autoupdatingCurrentCalendar()) {
+    let calendar: Calendar
+
+
+    init(calendar: Calendar = Calendar.autoupdatingCurrent) {
         self.calendar = calendar
     }
     
-    func stringForDate(date: NSDate, relativeToDate baseDate: NSDate) -> String {
-        var beginningOfDate: NSDate? = nil
-        var beginningOfBaseDate: NSDate? = nil
-        
-        calendar.rangeOfUnit(.Day, startDate: &beginningOfDate, interval: nil, forDate: date)
-        calendar.rangeOfUnit(.Day, startDate: &beginningOfBaseDate, interval: nil, forDate: baseDate)
-        let numberOfCalendarDaysBetweenDates = calendar.components(NSCalendarUnit.Day, fromDate: beginningOfBaseDate!, toDate: beginningOfDate!, options: NSCalendarOptions()).day
+    func stringForDate(date: Date, relativeToDate baseDate: Date) -> String {
+
+       let numberOfCalendarDaysBetweenDates = baseDate.numberOfDaysUntilDateTime(toDateTime: date, calendar: calendar)
         
         switch numberOfCalendarDaysBetweenDates {
         case -Int.max ... -2:
@@ -34,6 +41,7 @@ struct RelativeTimeDateFormatter {
             return "Tomorrow"
         default:
             return "In \(numberOfCalendarDaysBetweenDates) days"
-        }
+      }
+
     }
 }

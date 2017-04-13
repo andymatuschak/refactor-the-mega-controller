@@ -11,14 +11,14 @@ import XCTest
 
 class NavigationThemeTests: XCTestCase {
     func testThemeForZeroTasks() {
-        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 0), NavigationTheme.Normal)
+        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 0), NavigationTheme.normal)
     }
     
     func testThemeForAFewTasks() {
-        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 4), NavigationTheme.Warning)
+        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 4), NavigationTheme.warning)
     }
     
     func testThemeForManyTasks() {
-        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 20), NavigationTheme.Doomed)
+        XCTAssertEqual(NavigationTheme(numberOfImminentTasks: 20), NavigationTheme.doomed)
     }
 }
